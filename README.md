@@ -277,24 +277,27 @@ bank-management-system/
 You can create the necessary files within the above folder structure using the following PowerShell command. This command will create files in several of the directories:
 
 ```powershell
-# Define arrays for folders and files
+# Define the main folder name
+$mainFolder = "industry-folder-structure"
+
+# Define arrays for folders and files with the main folder
 $folders = @(
-    "frontend/client/components",
-    "frontend/client/pages",
-    "frontend/client/services",
-    "frontend/client/styles",
-    "frontend/assets/images",
-    "frontend/assets/fonts",
-    "backend/server/config",
-    "backend/server/controllers",
-    "backend/server/middleware",
-    "backend/server/models",
-    "backend/server/routes",
-    "backend/server/utils",
-    "database/migrations",
-    "database/seeders",
-    "test/unit",
-    "test/integration"
+    "$mainFolder/frontend/client/components",
+    "$mainFolder/frontend/client/pages",
+    "$mainFolder/frontend/client/services",
+    "$mainFolder/frontend/client/styles",
+    "$mainFolder/frontend/assets/images",
+    "$mainFolder/frontend/assets/fonts",
+    "$mainFolder/backend/server/config",
+    "$mainFolder/backend/server/controllers",
+    "$mainFolder/backend/server/middleware",
+    "$mainFolder/backend/server/models",
+    "$mainFolder/backend/server/routes",
+    "$mainFolder/backend/server/utils",
+    "$mainFolder/database/migrations",
+    "$mainFolder/database/seeders",
+    "$mainFolder/test/unit",
+    "$mainFolder/test/integration"
 )
 
 $files = @(
@@ -304,8 +307,12 @@ $files = @(
     "testUser.js", "utils.js", "middleware.js"
 )
 
+# Create the main folder
+New-Item -Path $mainFolder -ItemType Directory -Force
+
 # Create random files in specified folders
 $folders | ForEach-Object {
+    New-Item -Path "$_\\" -ItemType Directory -Force # Create the folder if it doesn't exist
     $randomFile = Get-Random -InputObject $files
     New-Item -Path "$_\\" -Name $randomFile -ItemType File -Force
 }
